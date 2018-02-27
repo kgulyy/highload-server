@@ -57,7 +57,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>ru.mail.park.MainKt</mainClass>
+                                    <mainClass>ru.mail.park.highload.MainKt</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
