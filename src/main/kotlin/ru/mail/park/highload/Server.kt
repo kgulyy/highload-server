@@ -18,7 +18,11 @@ class Server(private val port: Int, numberOfThreads: Int, private val rootPathNa
             val socket = server.accept()
             launch(threadPoolContext) {
                 socket.use {
-                    processRequest(it)
+                    try {
+                        processRequest(it)
+                    } catch (ex: Exception) {
+                        // ignored
+                    }
                 }
             }
         }
