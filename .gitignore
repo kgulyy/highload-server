@@ -1,6 +1,8 @@
 # JetBrains
 .idea/
-*.iml
 
 # Java
 target/
+
+# Config
+httpd.conf

@@ -12,9 +12,11 @@ class Request(inputStream: InputStream) {
 
     init {
         val reader = BufferedReader(InputStreamReader(inputStream))
-        val request = reader.readLine().split(" ")
-        requestMethod = RequestMethod.valueOfString(request[0])
-        var pathStr = if (request.size > 1) request[1].substringBefore("?") else ""
+        val inputLine = reader.readLine() ?: throw TooManyRequests()
+
+        val requestParams = inputLine.split(" ")
+        requestMethod = RequestMethod.valueOfString(requestParams[0])
+        var pathStr = if (requestParams.size > 1) requestParams[1].substringBefore("?") else ""
         pathStr = URLDecoder.decode(pathStr, "UTF-8")
         if (pathStr.endsWith("/") || pathStr.isEmpty()) {
             pathStr += "index.html"

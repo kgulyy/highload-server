@@ -5,9 +5,9 @@ import ru.mail.park.highload.toFormattedString
 import java.io.File
 import java.util.*
 
-open class Response(private val code: Int, private val status: String = "UNKNOWN", val file: File? = null) {
+class Response(private val code: Int, private val status: String = "UNKNOWN", val file: File? = null) {
 
-    constructor(exception: ServerException) : this(exception.code, exception.description)
+    constructor(exception: ClientException) : this(exception.code, exception.description)
 
     fun getHeaders(): String {
         var defaultHeader = "HTTP/1.1 $code $status\r\n" +

@@ -6,6 +6,10 @@ import java.util.*
 
 val dateFormat = SimpleDateFormat("EEE, dd MMM, yyyy HH:mm:ss z", Locale.ENGLISH).apply { timeZone = TimeZone.getTimeZone("GMT") }
 
+fun Date.toFormattedString(): String {
+    return dateFormat.format(this)
+}
+
 fun File.getMimeType(): String {
     return when (this.name.substringAfterLast('.')) {
         "txt" -> "text/plain"
@@ -19,8 +23,4 @@ fun File.getMimeType(): String {
         "swf" -> "application/x-shockwave-flash"
         else -> "application/octet-stream"
     }
-}
-
-fun Date.toFormattedString(): String {
-    return dateFormat.format(this)
 }

@@ -10,7 +10,7 @@ import java.net.Socket
 import java.nio.charset.Charset
 
 class Server(private val port: Int, numberOfThreads: Int, private val rootPathName: String) {
-    private val threadPoolContext = newFixedThreadPoolContext(numberOfThreads, "highload-server")
+    private val threadPoolContext = newFixedThreadPoolContext(numberOfThreads, "server-thread-pool")
 
     fun start() {
         val server = ServerSocket(port)
@@ -29,13 +29,13 @@ class Server(private val port: Int, numberOfThreads: Int, private val rootPathNa
 
         val response = try {
             getResponse(request)
-        } catch (serverException: ServerException) {
-            Response(serverException)
+        } catch (clientException: ClientException) {
+            Response(clientException)
         }
 
         BufferedOutputStream(socket.getOutputStream()).use { outputStream ->
             outputStream.write(response.getHeaders().toByteArray(Charset.forName("UTF-8")))
-            if (request.requestMethod != RequestMethod.HEAD) {
+            if (request.requestMethod == RequestMethod.GET) {
                 response.file?.inputStream().use { it?.copyTo(outputStream) }
             }
         }
